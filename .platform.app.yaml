@@ -2,9 +2,6 @@ name: library-site
 
 type: "python:3.11"
 
-build:
-  flavor: python
-
 dependencies:
   python:
     pip_install_args: ["--requirement=requirements.txt"]
