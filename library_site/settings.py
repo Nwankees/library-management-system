@@ -124,10 +124,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# Tell Django “my_project/static” is where I keep my custom CSS/JS/images
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+#where I keep my custom CSS/JS/images
+#STATICFILES_DIRS = [
+ #   BASE_DIR / 'static',
+#]
 
 MEDIA_URL  = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
