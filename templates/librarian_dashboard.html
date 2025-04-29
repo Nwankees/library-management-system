@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">Librarian Dashboard</h2>
+  <p>Welcome, {{ user.first_name }}!</p>
+
+  <ul>
+    <li><a href="{% url 'books' %}">Manage Books</a></li>
+    <li><a href="{% url 'new_book' %}">Add New Book</a></li>
+    <li><a href="{% url 'view_students' %}">View All Students</a></li>
+    <li><a href="{% url 'librarian_profile_change' %}">Edit My Profile</a></li>
+    <li>
+      <form action="{% url 'logout' %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-link p-0 m-0 align-baseline" style="color: #000000;">
+          Logout
+        </button>
+      </form>
+    </li>
+  </ul>
+</div>
+{% endblock %}

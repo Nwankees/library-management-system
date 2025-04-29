@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Borrow a Book</h2>
+      {% if messages %}
+    {% for message in messages %}
+      <div style="color: red;">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+  <!-- Show selected book info -->
+  {% if book %}
+    <p><strong>Book:</strong> {{ book.title }}</p>
+  {% endif %}
+
+  {% if student %}
+    <p><strong>Borrower:</strong> {{ student.first_name }} {{ student.last_name }}</p>
+  {% endif %}
+
+<form method="POST">
+  {% csrf_token %}
+  {{ form.student.label_tag }} {{ form.student }}
+  <br>
+  {{ form.reserve_if_unavailable }} {{ form.reserve_if_unavailable.label_tag }}
+  <br>
+  <button type="submit">Confirm Borrow</button>
+</form>
+{% endblock content %}

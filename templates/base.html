@@ -1,0 +1,104 @@
+{% load static %}
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}KSU Library System{% endblock %}</title>
+
+  <!-- Bootstrap CSS -->
+  <link 
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" 
+    rel="stylesheet">
+
+  <!-- Your custom CSS -->
+  <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+        <!-- put logo.png in static/images/ -->
+        <img src="{% static 'images/ksu.png' %}" alt="Logo" height="40" class="me-2">
+        <span class="fw-bold">KSU Library</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="{% url 'books' %}">Books</a></li>
+          {% if user.is_authenticated and user.groups.all.0.name == 'Student' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'student_dashboard' %}">Dashboard</a>
+            </li>
+          {% elif user.is_authenticated and user.groups.all.0.name == 'Librarian' %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'librarian_dashboard' %}">Dashboard</a>
+            </li>
+          {% endif %}
+          {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="userMenu" role="button"
+                 data-bs-toggle="dropdown">{{ user.first_name }}</a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                {% if user.groups.all.0.name == 'Student' %}
+                  <li><a class="dropdown-item" href="{% url 'student_profile_change' %}">Profile</a></li>
+                {% else %}
+                  <li><a class="dropdown-item" href="{% url 'librarian_profile_change' %}">Profile</a></li>
+                {% endif %}
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <form action="{% url 'logout' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="dropdown-item">Logout</button>
+                  </form>
+                </li>
+              </ul>
+            </li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="mt-5">
+    {# for your homepage hero #}
+    {% block index %}{% endblock %}
+
+    {# for all other pages #}
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer py-4 bg-white border-top mt-5">
+    <div class="container text-center">
+      <a class="mx-3 text-decoration-none text-muted" href="#">Visit</a>
+      <a class="mx-3 text-decoration-none text-muted" href="#">Explore</a>
+      <a class="mx-3 text-decoration-none text-muted" href="#">Learn</a>
+      <a class="mx-3 text-decoration-none text-muted" href="#">Support</a>
+      <a class="mx-3 text-decoration-none text-muted" href="#">About</a>
+      <p class="mt-3 mb-0 text-muted">&copy; 2025 KSU Library System</p>
+        <p class="mt-3 mb-0 text-muted">By Emmanuel Nwankwo</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS bundle -->
+  <script 
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+      //Timeout the messages after 4 seconds
+      setTimeout(function() {
+        var alerts = document.querySelectorAll('.alert');
+        alerts.forEach(function(alert) {
+            alert.style.display = 'none';
+        });
+      }, 4000);
+    </script>
+    </body>
+</html>

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>{{ librarian.first_name }}’s Dashboard</h2>
+  <h3>Books Currently Out</h3>
+  <ul>
+    {% for book in borrowed_books %}
+      <li>{{ book.title }} (ISBN: {{ book.isbn }})</li>
+    {% empty %}
+      <li>No books are currently borrowed.</li>
+    {% endfor %}
+  </ul>
+  <p>
+    <a href="{% url 'librarian_add_book' %}">+ Add Book</a> |
+    <a href="{% url 'librarian_remove_book' %}">– Remove Book</a>
+  </p>
+{% endblock %}

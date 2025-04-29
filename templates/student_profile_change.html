@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">Edit Profile: {{ student.first_name }} {{ student.last_name }}</h2>
+
+  {% if messages %}
+    {% for msg in messages %}
+      <div class="alert alert-success">{{ msg }}</div>
+    {% endfor %}
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      {{ form.first_name.label_tag }}
+      {{ form.first_name }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.middle_initial.label_tag }}
+      {{ form.middle_initial }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.last_name.label_tag }}
+      {{ form.last_name }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.sex.label_tag }}
+      {{ form.sex }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.year.label_tag }}
+      {{ form.year }}
+    </div>
+
+    <div class="mb-3">
+      {{ form.student_id.label_tag }}
+      {{ form.student_id }}
+    </div>
+
+    <div class="mt-4">
+      <button type="submit" class="btn btn-primary">Save Changes</button>
+      <a href="{% url 'password_change' %}" class="btn btn-secondary ms-2">Change Password</a>
+        <a href="{% url 'student_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+    </div>
+
+  </form>
+
+</div>
+{% endblock %}

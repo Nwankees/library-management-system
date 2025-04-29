@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block index %}
+  <section class="hero position-relative text-dark">
+    <div class="hero-overlay p-5">
+      <h1 class="display-4">
+    Discover.<br>
+    Borrow.<br>
+    Learn.
+    </h1>
+      <h2 class="h3 mb-3">Your Portal to Knowledge at Kennesaw State University</h2>
+      <p class="mb-4">
+        A Library System designed for my Honors Proposal Project
+      </p>
+      <a href="{% url 'register' %}" class="btn btn-success btn-lg">
+        Register Here &rarr;
+      </a>
+    </div>
+  </section>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container py-4">
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+  <div class="row g-4">
+    <div class="col-md-4">
+      {% if book.cover %}
+        <img src="{{ book.cover.url }}" class="img-fluid rounded" alt="{{ book.title }}">
+      {% else %}
+        <img src="{% static 'images/placeholder_book.png' %}"
+             class="img-fluid rounded" alt="No cover">
+      {% endif %}
+    </div>
+    <div class="col-md-8">
+      <h2>{{ book.title }}</h2>
+      {% if book.author %}<p><strong>Author:</strong> {{ book.author }}</p>{% endif %}
+      <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+      <p><strong>Publisher:</strong> {{ book.publisher }}</p>
+      <p><strong>Year:</strong> {{ book.year }}</p>
+      <p><strong>Language:</strong> {{ book.get_language_display }}</p>
+      {% if user.groups.all.0.name == 'Student' %}
+  {% if already_borrowed %}
+    <button class="btn btn-secondary mt-3" disabled>
+      Already Borrowed
+    </button>
+  {% else %}
+    {% if book.quantity > 0 %}
+      <a href="{% url 'borrow' book.id %}" class="btn btn-success mt-3">
+        Borrow This Book
+      </a>
+    {% else %}
+      <form action="{% url 'borrow' book.id %}" method="post" class="d-inline">
+        {% csrf_token %}
+        <input type="hidden" name="reserve_if_unavailable" value="on">
+        <button type="submit"
+                class="btn btn-warning mt-3"
+                {% if already_reserved %}disabled{% endif %}>
+          {% if already_reserved %}
+            Already Reserved
+          {% else %}
+            Reserve This Book
+          {% endif %}
+        </button>
+      </form>
+    {% endif %}
+  {% endif %}
+{% endif %}
+
+    </div>
+  </div>
+
+  <hr class="my-5">
+    {% if is_librarian %}
+    <h3>Borrow History</h3>
+    {% if borrow_records %}
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead class="table-light">
+            <tr>
+              <th>Borrower</th>
+              <th>Borrowed On</th>
+              <th>Due Date</th>
+              <th>Returned</th>
+              <th>Late Fee</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for record in borrow_records %}
+            <tr>
+              <td>{{ record.student.first_name }} {{ record.student.last_name }}</td>
+              <td>{{ record.borrowed_at|date:"M d, Y" }}</td>
+              <td>{{ record.returned_due_date|date:"M d, Y" }}</td>
+              <td>
+                {% if record.returned_at %}
+                  {{ record.returned_at|date:"M d, Y" }}
+                {% else %}
+                  <span class="text-warning">Still Borrowed</span>
+                {% endif %}
+              </td>
+              <td>
+                {% if record.calculate_late_fee %}
+                  <span class="text-danger">${{ record.calculate_late_fee }}</span>
+                {% else %}
+                  &mdash;
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p>No borrow history for this book.</p>
+    {% endif %}
+  {% endif %}
+    <a href="{% url 'books' %}" class="btn btn-secondary">Back to Books</a>
+</div>
+{% endblock %}

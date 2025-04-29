@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Student Dashboard</h2>
+    <small class="text-muted">Welcome, {{ user.first_name }}!</small>
+  </div>
+
+  <!-- Borrowed Books Table -->
+  <h4 class="mb-3">My Borrowed Books</h4>
+  {% if borrowed_books %}
+  <div class="table-responsive">
+    <table class="table table-striped align-middle">
+      <thead class="table-light">
+        <tr>
+          <th>Title</th>
+          <th>Borrowed On</th>
+          <th>Due Date</th>
+          <th>Status</th>
+          <th class="text-end">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for record in borrowed_books %}
+        <tr>
+          <td>{{ record.book.title }}</td>
+          <td>{{ record.borrowed_at|date:"M d, Y" }}</td>
+          <td>{{ record.returned_due_date|date:"M d, Y" }}</td>
+          <td>
+            {% if record.returned_at %}
+              <span class="badge bg-secondary">Returned</span>
+            {% elif record.calculate_late_fee %}
+              <span class="badge bg-danger">Fee ${{ record.calculate_late_fee }}</span>
+            {% else %}
+              <span class="badge bg-success">On Time</span>
+            {% endif %}
+          </td>
+          <td class="text-end">
+            {% if not record.returned_at %}
+              <a href="{% url 'return' record.book.id %}" class="btn btn-sm btn-outline-primary">Return</a>
+            {% else %}
+              &mdash;
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% else %}
+  <div class="alert alert-info">
+    You currently have no borrowed books.
+  </div>
+{% endif %}
+
+  <!-- Quick Links -->
+  <div class="mt-4 d-flex gap-2">
+    <a href="{% url 'books' %}" class="btn btn-primary">
+      Browse Books
+    </a>
+    <a href="{% url 'student_profile_change' %}" class="btn btn-secondary">
+      Edit Profile
+    </a>
+    <a href="{% url 'logout' %}" class="btn btn-outline-dark">
+      Logout
+    </a>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,137 @@
+/* ====== Color overrides to match KSU branding ====== */
+:root {
+    --bs-primary: #000000; /* Black */
+    --bs-success: #FFC61E; /* KSU Gold */
+}
+
+/* ====== Global Styles ====== */
+body {
+    background-color: #F9F9F9;
+    font-family: 'Roboto', sans-serif;
+    color: #5D6D7E;
+    margin: 0;
+    padding: 0;
+}
+
+/* ====== Navbar ====== */
+.navbar {
+    background-color: white;
+}
+.navbar a, .navbar-brand {
+    color: #000000 !important;
+    font-weight: bold;
+}
+.navbar a:hover {
+    color: #FFC61E !important;
+}
+
+/* ====== Hero Section ====== */
+.hero {
+    background: url("../images/hero.jpg") no-repeat center/cover;
+    height: 600px;
+    display: flex;
+    align-items: center;
+}
+.hero-overlay {
+    background-color: rgba(255,255,255,0.85);
+    color: #000000; /* Black text */
+    max-width: 500px;
+    border-radius: 8px;
+}
+
+/* ====== Page Titles ====== */
+h1, h2, h3, h4 {
+    color: #000000;
+}
+
+/* ====== Buttons ====== */
+.btn-primary {
+    background-color: #000000;
+    border-color: #000000;
+}
+
+.btn-primary:hover {
+    background-color: #333333;
+    border-color: #333333;
+}
+
+.btn-success {
+    background-color: #FFC61E;
+    border-color: #FFC61E;
+    color: #000000;
+}
+
+.btn-success:hover {
+    background-color: #e6b800;
+    border-color: #e6b800;
+    color: #000000;
+}
+
+/* ====== Links ====== */
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* ====== Book List ====== */
+.book-card {
+    background-color: #ffffff;
+    border: 1px solid #E5E8E8;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.05);
+}
+/* Make the card container visible to its overflow */
+.book-card {
+  position: relative;
+  overflow: visible; /* allow overlay to stick out */
+}
+
+/* Side‐panel style */
+.book-card .details-overlay {
+  position: absolute;
+  top: 0;
+  left: 100%;             /* right outside the card */
+  width: 220px;           /* adjust as you like */
+  background: #ffffff;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .2s ease-in-out, visibility .2s;
+  z-index: 10;
+}
+
+/* Reveal the panel when hovering anywhere on the card */
+.book-card:hover .details-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+/* ====== Success and Warning Messages ====== */
+.alert-success {
+    background-color: #FFF9E5;
+    color: #FFC61E;
+    border: 1px solid #FFE066;
+}
+
+.alert-danger {
+    background-color: #FADBD8;
+    color: #C0392B;
+    border: 1px solid #F5B7B1;
+}
+
+/* ====== Footer (Optional) ====== */
+.footer {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #ffffff;
+    color: #5D6D7E;
+    text-align: center;
+    font-size: 14px;
+}

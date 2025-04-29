@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Remove Book ({{ librarian.first_name }})</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_div }}
+    <button type="submit">Remove from Inventory</button>
+  </form>
+{% endblock %}

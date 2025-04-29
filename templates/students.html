@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-4">
+
+  <h2 class="mb-4">Current Students</h2>
+
+  {% if students %}
+    <div class="row g-4">
+      {% for student in students %}
+        <div class="col-md-6 col-lg-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">
+                {{ forloop.counter }}. {{ student.first_name }} {{ student.last_name }}
+              </h5>
+              <ul class="list-unstyled small mb-0">
+                {% if student.middle_initial %}
+                  <li><strong>Middle Initial:</strong> {{ student.middle_initial }}</li>
+                {% endif %}
+                <li><strong>Sex:</strong> {{ student.sex }}</li>
+                <li><strong>Year:</strong> {{ student.get_year_display }}</li>
+                <li><strong>ID:</strong> {{ student.student_id }}</li>
+                <li><strong>Email:</strong> {{ student.email }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No students found.</p>
+  {% endif %}
+
+</div>
+{% endblock content %}
