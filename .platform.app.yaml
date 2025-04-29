@@ -2,10 +2,6 @@ name: library-site
 
 type: "python:3.11"
 
-dependencies:
-  python:
-    pip_install_args: ["--requirement=requirements.txt"]
-
 mounts:
   "/static": "shared:files/static"
   "/media": "shared:files/media"
