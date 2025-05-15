@@ -1,3 +1,19 @@
+# Virtual environments
 .venv/
+env/
+ENV/
+
+# Python cache
 __pycache__/
+*.py[cod]
+
+# SQLite DB
 *.sqlite3
+
+# Platform.sh or other PaaS
+.platform/
+.platform.app.yaml
+
+# IDE junk
+.idea/
+.vscode/

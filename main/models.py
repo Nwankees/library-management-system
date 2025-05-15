@@ -1,4 +1,3 @@
-from django.conf import settings
 import re, datetime
 import isbnlib
 from django.db import models
@@ -8,8 +7,6 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 current_year = datetime.date.today().year
-
-from django.conf import settings
 
 class Student(models.Model):
     user = models.OneToOneField(
@@ -129,7 +126,7 @@ class Book(models.Model):
                 returned_due_date=self.to_be_returned
             )
         else:
-            # quantity == 0: leave reservation entirely up to the view
+            # quantity == 0:
             raise ValidationError("No copies available.")
 
     def return_book(self):
@@ -139,8 +136,7 @@ class Book(models.Model):
         self.is_borrowed = False
         self.save()
 
-        # late fee calculation omitted here
-        # pop next in queue
+
         next_person = self.reservation_set.order_by('reserved_at').first()
         if next_person:
             self.borrow(next_person.student)
@@ -158,10 +154,7 @@ class Borrow(models.Model):
         unique_together = ('student','book','borrowed_at')
 
     def calculate_late_fee(self):
-        """
-        Calculates late fee:
-        $1000
-        """
+
         now = timezone.now()
         if self.returned_at:
             comparison_date = self.returned_at

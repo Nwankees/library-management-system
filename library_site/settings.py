@@ -129,6 +129,14 @@ STATIC_URL = '/static/'
  #   BASE_DIR / 'static',
 #]
 
+#STATIC_URL = '/static/'
+
+import os
+
+if DEBUG:
+    STATICFILES_DIRS = [
+        BASE_DIR / 'static',
+    ]
 MEDIA_URL  = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 

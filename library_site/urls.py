@@ -60,5 +60,6 @@ urlpatterns = [
     path('librarian/dashboard/', librarian_dashboard, name='librarian_dashboard'),
 ]
 
+#The media fix
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
